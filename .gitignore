@@ -1,0 +1,41 @@
+# Material de trabalho NUNCA entra no repositorio.
+# Video bruto e video pronto sao pesados e podem conter imagem de pessoas reais.
+video/
+brutos/
+prontos/
+trilha/
+marca/
+legendas/
+
+# Arquivos de midia soltos, em qualquer pasta
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.m4v
+*.mts
+*.m2ts
+*.webm
+*.mp3
+*.wav
+*.aac
+*.m4a
+*.srt
+
+# Planos e fichas geradas durante o uso
+plano*.json
+ficha*.json
+*.montagem.md
+
+# Segredo: nao ha nenhum nesta skill, e nao deve haver
+.env
+*.env
+*.key
+*.pem
+credentials*.json
+
+# Sistema
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
