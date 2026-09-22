@@ -80,7 +80,7 @@ arquivos brutos nunca são alterados — todo resultado sai em arquivo novo.
 ## Instalação
 
 ```bash
-git clone https://github.com/<usuario>/video-institucional.git
+git clone https://github.com/anaretore-thecosmo/video-institucional.git
 cd video-institucional
 bash instalar.sh
 ```
