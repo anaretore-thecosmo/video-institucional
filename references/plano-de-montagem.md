@@ -1,5 +1,17 @@
 # Formato do plano de montagem (plano.json)
 
+Indice:
+1. Exemplo completo
+2. Campos da raiz
+3. Campos de bloco
+4. Trilha
+5. Cartelas
+6. O que o script faz sozinho
+7. O que o script NAO faz
+8. Conferir antes de renderizar
+
+---
+
 O `montar.py` le este arquivo. Escrever o plano so DEPOIS do roteiro aprovado
 e dos arquivos entregues.
 

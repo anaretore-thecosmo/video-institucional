@@ -31,14 +31,26 @@ find "${DESTINO}" -type f | sort
 
 echo
 echo "Conferindo as ferramentas que a skill usa:"
-for f in ffmpeg ffprobe python; do
+for f in ffmpeg ffprobe; do
   if command -v "${f}" >/dev/null 2>&1; then
     echo "  ${f}: presente"
   else
     echo "  ${f}: AUSENTE - a skill precisa dele"
   fi
 done
-if python -c "import faster_whisper" >/dev/null 2>&1; then
+
+# Em Linux e macOS o interpretador costuma ser python3; no Git Bash do Windows, python.
+PY=""
+for candidato in python3 python; do
+  if command -v "${candidato}" >/dev/null 2>&1; then PY="${candidato}"; break; fi
+done
+if [ -n "${PY}" ]; then
+  echo "  python: presente como '${PY}' ($(${PY} --version 2>&1))"
+else
+  echo "  python: AUSENTE - a skill precisa dele"
+fi
+
+if [ -n "${PY}" ] && "${PY}" -c "import faster_whisper" >/dev/null 2>&1; then
   echo "  faster-whisper: presente (legenda automatica disponivel)"
 else
   echo "  faster-whisper: ausente (opcional; sem ele nao ha legenda automatica)"

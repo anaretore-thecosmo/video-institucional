@@ -52,6 +52,9 @@ ffmpeg -version | head -1 && ffprobe -version | head -1
 Sem ffmpeg, parar e dizer que falta - **nao instalar nada por conta propria**.
 Propor o comando e esperar ordem.
 
+**Nome do interpretador:** os exemplos abaixo usam `python`. Em Linux e macOS
+costuma ser `python3`. Conferir com `python --version` antes e usar o que existir.
+
 ## O fluxo, em cinco passos
 
 ### Passo 1 - Tipo
@@ -123,13 +126,18 @@ folha de montagem. Se a duracao saiu fora da janela, dizer isso.
 
 A legenda exige um arquivo `.srt`. Duas origens:
 
-1. **Transcricao local** - a skill `transcritor-audio` roda Whisper nesta
-   maquina, sem chave de API e sem o audio sair daqui. Depende do pacote
-   `faster-whisper`. Conferir:
+1. **Transcricao automatica local** - gerar com o script da propria skill:
    ```bash
-   python -c "import faster_whisper; print('ok')"
+   python scripts/gerar_legenda.py <video-ou-audio> -o legendas/final.srt
    ```
-   Se faltar, **nao instalar sozinho**: dizer que falta e propor o comando.
+   Roda Whisper nesta maquina: nada sai do computador, nenhuma chave de API.
+   Depende do pacote `faster-whisper`; conferir com
+   `python -c "import faster_whisper"`. Se faltar, **nao instalar sozinho**:
+   dizer que falta e propor `python -m pip install faster-whisper`.
+
+   **Sempre conferir o texto com o usuario antes de queimar no video.**
+   Transcricao automatica erra nome proprio, numero e termo tecnico - e no
+   institucional esses sao justamente os que nao podem sair errados.
 2. **Texto escrito a mao**, quando o video tem locucao planejada - o texto ja
    existe no roteiro, so precisa virar `.srt` com os tempos.
 
@@ -148,16 +156,18 @@ Sem `.srt`, montar sem legenda e avisar.
   segundos, texto na tela, entrega e loop. Ler nos passos 3 e 5.
 - `references/plano-de-montagem.md` - formato do `plano.json`. Ler no passo 5.
 - `scripts/inspecionar_brutos.py` - ficha tecnica e vereditos (somente leitura).
+- `scripts/gerar_legenda.py` - transcreve a fala e escreve o `.srt`, local.
 - `scripts/montar.py` - motor de montagem.
 
 ## Estado conhecido, em 22/09/2026
 
-- Testado nesta maquina com ffmpeg 8.1: montagem com cartelas, trilha, ducking
-  (queda medida de 5,6 dB) e legenda queimada funcionando ponta a ponta.
+- Testado com ffmpeg 8.1: montagem com cartelas, trilha, ducking (queda medida
+  de 5,6 dB) e legenda queimada funcionando ponta a ponta.
+- `gerar_legenda.py` testado com fala real em portugues: 2 blocos, tempos e
+  acentuacao corretos, `.srt` valido. Modelo `small` em CPU.
 - Os limiares de movimento e de corte interno do `inspecionar_brutos.py` foram
   calibrados em **material sintetico**, nao em captacao real. Conferir e
   ajustar no primeiro uso com material de verdade.
-- `faster-whisper` nao estava instalado. Sem ele, nao ha legenda automatica.
 
 ---
 

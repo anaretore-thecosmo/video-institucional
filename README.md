@@ -73,9 +73,12 @@ arquivos brutos nunca são alterados — todo resultado sai em arquivo novo.
 ## Requisitos
 
 - **ffmpeg** e **ffprobe** no PATH (testado com ffmpeg 8.1).
-- **Python 3.10+**.
+- **Python 3.10+** (`python3` em Linux e macOS, `python` no Git Bash do Windows).
 - Opcional, só para legenda automática: `faster-whisper`, que transcreve
   localmente. Sem ele a skill funciona, apenas sem legenda automática.
+  ```bash
+  python3 -m pip install faster-whisper
+  ```
 
 ## Instalação
 
@@ -97,12 +100,16 @@ Honestidade sobre o que foi e o que não foi provado:
 - Montagem testada ponta a ponta com ffmpeg 8.1: cartelas, trilha, redução
   automática da música na fala (queda medida de 5,6 dB) e legenda queimada,
   todas funcionando.
+- Geração de legenda testada com fala real em português: `.srt` válido, tempos
+  e acentuação corretos, modelo `small` rodando em CPU.
 - Os limiares de detecção de movimento e de corte interno do
   `inspecionar_brutos.py` foram calibrados em **material sintético**, não em
   captação real. São provisórios e estão marcados como tal dentro do script.
   Conferir no primeiro uso com material de verdade.
-- A skill não gera legenda sozinha sem o `faster-whisper`, não reenquadra para
-  vertical automaticamente, e usa corte seco (sem crossfade entre blocos).
+- A skill não reenquadra para vertical automaticamente e usa corte seco (sem
+  crossfade entre blocos).
+- Transcrição automática erra nome próprio, número e termo técnico. A skill
+  manda conferir o texto antes de queimar no vídeo.
 
 ## Estrutura
 
@@ -114,5 +121,6 @@ references/luz-e-cor.md           sombreamento, casar drone com solo
 references/performance.md         destino, primeiros segundos, entrega, loop
 references/plano-de-montagem.md   formato do plano.json
 scripts/inspecionar_brutos.py     ficha técnica e vereditos (somente leitura)
+scripts/gerar_legenda.py          transcreve a fala e escreve o .srt, local
 scripts/montar.py                 motor de montagem
 ```
